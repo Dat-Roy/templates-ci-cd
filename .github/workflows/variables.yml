@@ -1,0 +1,26 @@
+name: Distinguish the types of variables in GitHub Action
+on: 
+  push:
+    branches: main
+env:
+  WORKFLOW_VARIABLE: file in YAML file
+jobs:
+  check_variable: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check variable and save
+        run: |
+        mkdir -p outputs/
+        echo ${{WORKFLOW_VARIABLE}} > variables.txt
+        echo ${{vars.GLOBAL_VARIABLE}} >> variables.txt
+        echo ${{secrets.SESITIVE_VAR}} >> variables.txt
+        nvidia-smi
+      - name: Save to repository
+      - run: |
+        git config user.name "runner"
+        git config user.email "actions@github.com"
+        git add outputs/
+        git commit -m "Add file output"
+        git push
+    
