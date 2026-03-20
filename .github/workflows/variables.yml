@@ -7,6 +7,9 @@ on:
 env:
   WORKFLOW_VARIABLE: file in YAML file
 
+permissions:
+  contents: write
+
 jobs:
   check_variable: 
     runs-on: ubuntu-latest
@@ -17,10 +20,13 @@ jobs:
       - name: Check variable and save
         run: |
           mkdir -p outputs/
-          echo $WORKFLOW_VARIABLE > outputs/variables.txt
+          echo ${WORKFLOW_VARIABLE} 
+          echo ${{ vars.GLOBAL_VARIABLE }} 
+          echo ${{ secrets.SENSITIVE_VARS }}
+          echo ${WORKFLOW_VARIABLE} > outputs/variables.txt
           echo ${{ vars.GLOBAL_VARIABLE }} >> outputs/variables.txt
-          echo ${{ secrets.SENSITIVE_VAR }} >> outputs/variables.txt
-          nvidia-smi
+          echo ${{ secrets.SENSITIVE_VARS }} >> outputs/variables.txt
+          nvidia-smi 2>/dev/null || true
 
       - name: Save to repository
         run: |
