@@ -19,10 +19,7 @@ on:
         options:
           - yes
           - no
-
-
-  pages: write
-  id-token: write  
+ 
 
 jobs:
   build:
