@@ -3,6 +3,9 @@ name: Distinguish the types of variables in GitHub Action
 on: 
   push:
     branches: [main]
+    paths:
+      - ".github/workflows/variables.yml"
+      
 
 env:
   WORKFLOW_VARIABLE: file in YAML file
