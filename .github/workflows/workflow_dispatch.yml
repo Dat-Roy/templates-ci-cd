@@ -9,16 +9,16 @@ on:
         default: 'no'
         type: choice
         options:
-          - yes
-          - no
+          - 'yes'
+          - 'no'
       deploy:
         description: Do you want to deploy?
         required: true
         default: 'no'
         type: choice
         options:
-          - yes
-          - no
+          - 'yes'
+          - 'no'
  
 
 jobs:
