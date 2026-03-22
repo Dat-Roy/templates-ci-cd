@@ -1,0 +1,31 @@
+name: Workflow to notify Gmail on Code Changes # May be changed
+on:
+  push:
+    branches: ["main"]
+jobs:
+  inform_everyone:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare mail and send it
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          
+          # Content Mail (Should be changed if new content)
+          subject: ${{github.repository}} [${{github.ref_name}}]
+          to: tiendat3105vn@gmail.com
+          from: Robot Pham
+          body: |
+            The commit message: : ${{github.event.head_commit.message}} (${{github.sha}})
+            You should check out at: ${{github.event.head_commit.url}}
+          html_body: |
+            <p>The commit message: : <strong>${{github.event.head_commit.message}}</strong> (${{github.sha}})</p>
+            You should check out at: ${{github.event.head_commit.url}}
+            
+          
+        
+    
