@@ -1,0 +1,38 @@
+name: Set up pages of the repository on GitHub
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_page:
+        required: true
+        description: Do you want to deploy the pages on GitHub?
+        default: "Deploy"
+        type: choice
+        options:
+          - "Deploy"
+          - "I don't want."
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    if: ${{ inputs.deploy_page == 'Deploy' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: upload
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v4
