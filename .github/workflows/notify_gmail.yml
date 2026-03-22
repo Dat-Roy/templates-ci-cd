@@ -1,4 +1,4 @@
-name: Workflow to notify Gmail on Code Changes # May be changed
+name: Workflow to notify Gmail on Code Changes # May be changed 
 on:
   push:
     branches: ["main"]
@@ -12,16 +12,17 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
-          username: ${{secrets.MAIL_USERNAME}}
-          password: ${{secrets.MAIL_PASSWORD}}
+          username: ${{secrets.MAIL_USERNAME}} # Địa chỉ email
+          password: ${{secrets.MAIL_PASSWORD}} # App password (Not password mail)
           
-          # Content Mail (Should be changed if new content)
+          # Content Mail (Should be changed if new content) <------>
           subject: ${{github.repository}} [${{github.ref_name}}]
-          to: tiendat3105vn@gmail.com
+          to: tiendat3105vn@gmail.com #,<mail@gmail.com, ...
           from: Robot Pham
+          # Nếu có cả 2 nó sử dụng html_body, còn body chỉ để fallback
           body: |
-            The commit message: : ${{github.event.head_commit.message}} (${{github.sha}})
-            You should check out at: ${{github.event.head_commit.url}}
+            The commit message: ${{github.event.head_commit.message}} (${{github.sha}})
+            You should check out at: ${{github.event.head_commit.url}} 
           html_body: |
             <p>The commit message: : <strong>${{github.event.head_commit.message}}</strong> (${{github.sha}})</p>
             You should check out at: ${{github.event.head_commit.url}}
